@@ -54,8 +54,12 @@
     .import via2_init_ports
     .import test_via1
     .import test_via2
+    .import lcd_clear
     .import lcd_write
     .import binhex
+    .import delayms
+    .import blink_on
+    .import blink_off
     .import clear_screen
     .import sound_init
     .import startup_sound
@@ -94,6 +98,7 @@ init_via1:
     BCS test_via1_failed
     LDA #%11100001              ; LCD signals + 1 pin for LED
     LDX #%11111111              ; LCD databus lines
+    JSR via1_init_ports
     print "Done\n\r"
     JMP init_via2
 test_via1_failed:
@@ -102,9 +107,8 @@ init_via2:
     print "Initializing 6522 VIA2..."
     JSR test_via2
     BCS test_via2_failed
-    JSR via1_init_ports         ; Initialize VIA
-    LDA #%00000000
-    LDX #%00000000
+    LDA #%00000001
+    LDX #%11111111
     JSR via2_init_ports
     print "Done\n\r"
     JMP init_vias_done
@@ -128,6 +132,7 @@ init_vias_done:
 .ifdef CFG_LCD
     print "Initializing Hitachi LCD...."
     JSR lcd_init                ; Set up the LCD display
+    JSR lcd_clear
     writeln_lcd krisos_lcd_message
     print "Done\n\r"
 .endif
@@ -203,6 +208,8 @@ command_line:
     case_command #STACK_CMD,    dump_stack
     case_command #PEEK_CMD,     peek
     case_command #POKE_CMD,     poke
+    case_command #BLINK_ON,     blink_on
+    case_command #BLINK_OFF,    blink_off
 command_line_done:
     JMP command_line                    ; Do it all again!
 

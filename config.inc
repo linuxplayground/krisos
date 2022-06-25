@@ -37,7 +37,7 @@ CFG_LCD = 1
 CFG_CLOCK = 1
 
 ; Enable debug output
-CFG_DEBUG = 1
+; CFG_DEBUG = 1
 
 ; Test user space memory
 ; CFG_USER_MEMTEST = 1

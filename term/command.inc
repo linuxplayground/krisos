@@ -40,6 +40,8 @@ _COMMAND_H_ = 1
     STACK_CMD
     PEEK_CMD
     POKE_CMD
+    BLINK_ON
+    BLINK_OFF
 .endenum
 
 FALSE   = 0
@@ -64,6 +66,8 @@ UPTIME:     .asciiz "uptime"
 STACK:      .asciiz "stack"
 PEEK:       .asciiz "peek"
 POKE:       .asciiz "poke"
+BLINKON:    .asciiz "blinkon"
+BLINKOFF:   .asciiz "blinkoff"
 
 help_header_msg:        ; Note: this is split up for a chance to fit in page boundaries
     .byte "Available commands in KrisOS:\n\r"
@@ -83,6 +87,8 @@ help_commands_msg:
     .byte "uptime - Show the uptime in seconds of the K64\n\r"
     .byte "peek - Show the value at a memory location\n\r"
     .byte "poke - Set the value at a memory location\n\r"
+    .byte "blinkon - Turn on the blinking light\n\r"
+    .byte "blinkoff - Turn off the blinking light\n\r"
     .byte NULL
 
 help_copyright_msg:

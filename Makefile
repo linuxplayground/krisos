@@ -16,8 +16,10 @@ OBJS =  zeropage.o \
 	sound/sid.o \
 	io/lcd.o \
 	io/acia.o \
+	io/blink.o \
 	util/binhex.o \
 	util/print.o \
+	util/delay.o \
 	mem/memtest.o \
 	mem/peekpoke.o \
 	stdlib/stdlib.o \
@@ -44,4 +46,4 @@ burn: $(TARGET)
 
 .PHONY: terminal
 terminal:
-	picocom -b 19200 --send-cmd 'sz -Xb' $(SERIAL)
+	picocom -b 19200 --send-cmd 'lsx -Xb' $(SERIAL)

@@ -61,6 +61,8 @@ parse_command:
     check_command STACK, STACK_CMD
     check_command PEEK, PEEK_CMD
     check_command POKE, POKE_CMD
+    check_command BLINKON, BLINK_ON
+    check_command BLINKOFF, BLINK_OFF
 error:
     LDA #ERROR_CMD
     RTS
