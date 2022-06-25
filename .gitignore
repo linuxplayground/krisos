@@ -3,3 +3,4 @@
 *.raw
 *.bin
 *.o
+.DS_Store
