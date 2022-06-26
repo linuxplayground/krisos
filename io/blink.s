@@ -17,7 +17,7 @@ _LIB_BLINK_ = 1
 
 blink_on:
     PHA
-    print "Turning on the LED..."
+    strprint "Turning on the LED..."
     JSR lcd_clear
     writeln_lcd on_message
     LDA #%00000001
@@ -27,7 +27,7 @@ blink_on:
 
 blink_off:
     PHA
-    print "Turning off the LED..."
+    strprint "Turning off the LED..."
     JSR lcd_clear
     writeln_lcd off_message
     LDA #%00000000

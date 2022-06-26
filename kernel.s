@@ -33,6 +33,7 @@
     .include "util/print.inc"
     .include "util/toolbox.inc"
     .include "config.inc"
+    .include "ehbasic.s"
 
     .importzp nmi_ptr
     .importzp irq_ptr
@@ -84,94 +85,94 @@ main:
 
     JSR acia_init               ; Set up the serial port
     ; We can't print to the serial port until the above completed
-    print "Disabled interrupts"
-    print "Disabled BCD mode"
-    print "Initialized stack"
-    print "Initialized 6551 ACIA"
+    strprint "Disabled interrupts"
+    strprint "Disabled BCD mode"
+    strprint "Initialized stack"
+    strprint "Initialized 6551 ACIA"
 
-    print "Initializing terminal...\n\r"
+    strprint "Initializing terminal...\n\r"
     JSR setup_term              ; Pretty up the user's terminal
 
 init_via1:
-    print "Initializing 6522 VIA1..."
+    strprint "Initializing 6522 VIA1..."
     JSR test_via1               ; See if the via works!
     BCS test_via1_failed
     LDA #%11100001              ; LCD signals + 1 pin for LED
     LDX #%11111111              ; LCD databus lines
     JSR via1_init_ports
-    print "Done\n\r"
+    strprint "Done\n\r"
     JMP init_via2
 test_via1_failed:
-    print "FAILED\n\r"
+    strprint "FAILED\n\r"
 init_via2:
-    print "Initializing 6522 VIA2..."
+    strprint "Initializing 6522 VIA2..."
     JSR test_via2
     BCS test_via2_failed
     LDA #%00000001
     LDX #%11111111
     JSR via2_init_ports
-    print "Done\n\r"
+    strprint "Done\n\r"
     JMP init_vias_done
 test_via2_failed:
-    print "FAILED\n\r"
+    strprint "FAILED\n\r"
 init_vias_done:
 
 .ifdef CFG_SN76489
-    print "Initializing SN76489A Sound..."
+    strprint "Initializing SN76489A Sound..."
     JSR sound_init
     JSR startup_sound
-    print "Done\n\r"
+    strprint "Done\n\r"
 .endif
 
 .ifdef CFG_SID
-    print "Initializing SID Sound..."
+    strprint "Initializing SID Sound..."
     JSR sid_init
-    print "Done\n\r"
+    strprint "Done\n\r"
 .endif
 
 .ifdef CFG_LCD
-    print "Initializing Hitachi LCD...."
+    strprint "Initializing Hitachi LCD...."
     JSR lcd_init                ; Set up the LCD display
     JSR lcd_clear
     writeln_lcd krisos_lcd_message
-    print "Done\n\r"
+    strprint "Done\n\r"
 .endif
 
 .ifdef CFG_USER_MEMTEST
-    print "Testing user space memory..."
+    strprint "Testing user space memory..."
     JSR memtest_user
     BCC memory_passed
-    print "FAILED\n\r"
+    strprint "FAILED\n\r"
     JMP memory_test_done
 memory_passed:
-    print "Done\n\r"
+    strprint "Done\n\r"
 memory_test_done:
 .endif
 
-    print "Clearing userspace memory..."
+    strprint "Clearing userspace memory..."
     LDA #$10                    ; The page to clear
     JSR clear_page
-    print "Done\n\r"
+    strprint "Done\n\r"
 
-    print "Re-enabling interrupts..."
+    strprint "Re-enabling interrupts..."
     JSR set_interrupt_handlers
-    print "Done\n\r"
+    strprint "Done\n\r"
 
-    print "Re-enabling interrupts..."
+    strprint "Re-enabling interrupts..."
     CLI                         ; Re-enable interrupts
-    print "Done\n\r"
+    strprint "Done\n\r"
 
-    print "Build time "
+    strprint "Build time "
     write_hex_dword build_time
-    print "\n\r"
+    strprint "\n\r"
 
-    print "Assembler version ca65 "
+    strprint "Assembler version ca65 "
     write_hex_word assembler_version
-    print "\n\r"
+    strprint "\n\r"
 
 .ifdef CFG_CLOCK
     ; We start the clock late because it's wired into NMI
-    print "Starting the system clock..."
+    strprint "Starting the system clock..."
     STZ16 uptime                ; Reset our uptime to zero
     LDA #%01000000              ; T1 continuous interrupts, PB7 disabled
     STA VIA1_ACR
@@ -181,11 +182,11 @@ memory_test_done:
     STA VIA1_T1CL               ; Low byte of interval counter
     LDA #>TICK
     STA VIA1_T1CH               ; High byte of interval counter
-    print "Done\n\r"
+    strprint "Done\n\r"
 .endif
 
-    print "Starting command line...\n\r"
-    print "\nWelcome to KrisOS on the K64\n\n\r"
+    strprint "Starting command line...\n\r"
+    strprint "\nWelcome to KrisOS on the K64\n\n\r"
 
 command_line:
     printdbg "Start of CLI\n\r"
@@ -210,6 +211,7 @@ command_line:
     case_command #POKE_CMD,     poke
     case_command #BLINK_ON,     blink_on
     case_command #BLINK_OFF,    blink_off
+    case_command #BASIC_CMD,    BASIC_init
 command_line_done:
     JMP command_line                    ; Do it all again!
 
@@ -222,7 +224,7 @@ load_program:
     JSR binhex
     STA char_ptr
     JSR write_char              ; Display XModem's return value
-    print "\n\r"
+    strprint "\n\r"
     JMP command_line
 
 run_program:
@@ -259,7 +261,7 @@ run_program:
     JMP command_line
 
 error:
-    print "Unknown command, type help for help\n\r"
+    strprint "Unknown command, type help for help\n\r"
     RTS
 
 help:
@@ -269,11 +271,11 @@ help:
     RTS
 
 shutdown:
-    print "Shutting down...\n\r"
+    strprint "Shutting down...\n\r"
     STP                         ; We do not return from this, ever.
 
 uptime_ticker:
-    print "Uptime: "
+    strprint "Uptime: "
     LDA uptime+1                ; High order byte of uptime
     JSR binhex
     STA char_ptr
@@ -286,7 +288,7 @@ uptime_ticker:
     JSR write_char
     STX char_ptr
     JSR write_char
-    print "\n\r"
+    strprint "\n\r"
     RTS
 
 soft_irq:

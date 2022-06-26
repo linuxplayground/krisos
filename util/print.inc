@@ -27,7 +27,7 @@ _PRINT_INC_ = 1
 ; Usage:
 ; print "This is my string\n\r"
 ; Null character termination automatically added
-.macro print string
+.macro strprint string
     JSR primm
     .asciiz string
 .endmacro

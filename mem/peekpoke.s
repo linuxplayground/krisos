@@ -28,14 +28,15 @@ _LIB_PEEKPOKE_ = 1
     .export peek
     .export poke
 
+    .import BASIC_init
     .include "../util/print.inc"
 
 peek:
-    print "Not yet implemented\n\r"
+    strprint "Not yet implemented\n\r"
     RTS
 
 poke:
-    print "Not yet implemented\n\r"
+    strprint "Not yet implemented\n\r"
     RTS
 
 .endif

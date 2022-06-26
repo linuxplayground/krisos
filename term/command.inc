@@ -42,6 +42,7 @@ _COMMAND_H_ = 1
     POKE_CMD
     BLINK_ON
     BLINK_OFF
+    BASIC_CMD
 .endenum
 
 FALSE   = 0
@@ -68,6 +69,7 @@ PEEK:       .asciiz "peek"
 POKE:       .asciiz "poke"
 BLINKON:    .asciiz "blinkon"
 BLINKOFF:   .asciiz "blinkoff"
+BASIC:      .asciiz "basic"
 
 help_header_msg:        ; Note: this is split up for a chance to fit in page boundaries
     .byte "Available commands in KrisOS:\n\r"
@@ -89,6 +91,7 @@ help_commands_msg:
     .byte "poke - Set the value at a memory location\n\r"
     .byte "blinkon - Turn on the blinking light\n\r"
     .byte "blinkoff - Turn off the blinking light\n\r"
+    .byte "basic - run ehbasic\n\r"
     .byte NULL
 
 help_copyright_msg:
