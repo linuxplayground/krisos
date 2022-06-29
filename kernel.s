@@ -175,13 +175,13 @@ memory_test_done:
     strprint "Starting the system clock..."
     STZ16 uptime                ; Reset our uptime to zero
     LDA #%01000000              ; T1 continuous interrupts, PB7 disabled
-    STA VIA1_ACR
+    STA VIA2_ACR
     LDA #%11000000              ; Enable T1 interrupts
-    STA VIA1_IER
+    STA VIA2_IER
     LDA #<TICK
-    STA VIA1_T1CL               ; Low byte of interval counter
+    STA VIA2_T1CL               ; Low byte of interval counter
     LDA #>TICK
-    STA VIA1_T1CH               ; High byte of interval counter
+    STA VIA2_T1CH               ; High byte of interval counter
     strprint "Done\n\r"
 .endif
 
@@ -312,7 +312,7 @@ nmi:
     PHX
     PHY
 uptime_handler:
-    BIT VIA1_T1CL               ; Clear interrupt
+    BIT VIA2_T1CL               ; Clear interrupt
     INC16 uptime
     JMP (nmi_ptr)               ; Call the user's NMI handler
 default_nmi:                    ; Do nothing
