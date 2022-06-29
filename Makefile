@@ -12,11 +12,10 @@ SERIAL = /dev/tty.usbserial-AD0JIPTS
 OBJS =  zeropage.o \
 	kernel.o \
 	io/via.o \
-	sound/sound.o \
-	sound/sid.o \
 	io/lcd.o \
 	io/acia.o \
-	io/blink.o \
+	io/led.o \
+	io/beep.o \
 	util/binhex.o \
 	util/print.o \
 	util/delay.o \

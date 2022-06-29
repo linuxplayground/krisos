@@ -40,8 +40,8 @@ _COMMAND_H_ = 1
     STACK_CMD
     PEEK_CMD
     POKE_CMD
-    BLINK_ON
-    BLINK_OFF
+    LED_ON_CMD
+    LED_OFF_CMD
     BASIC_CMD
 .endenum
 
@@ -67,8 +67,8 @@ UPTIME:     .asciiz "uptime"
 STACK:      .asciiz "stack"
 PEEK:       .asciiz "peek"
 POKE:       .asciiz "poke"
-BLINKON:    .asciiz "blinkon"
-BLINKOFF:   .asciiz "blinkoff"
+LEDON:      .asciiz "ledon"
+LEDOFF:     .asciiz "ledoff"
 BASIC:      .asciiz "basic"
 
 help_header_msg:        ; Note: this is split up for a chance to fit in page boundaries

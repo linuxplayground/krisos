@@ -59,8 +59,8 @@
     .import lcd_write
     .import binhex
     .import delayms
-    .import blink_on
-    .import blink_off
+    .import led_on
+    .import led_off
     .import clear_screen
     .import sound_init
     .import startup_sound
@@ -209,8 +209,8 @@ command_line:
     case_command #STACK_CMD,    dump_stack
     case_command #PEEK_CMD,     peek
     case_command #POKE_CMD,     poke
-    case_command #BLINK_ON,     blink_on
-    case_command #BLINK_OFF,    blink_off
+    case_command #LED_ON_CMD,   led_on
+    case_command #LED_OFF_CMD,  led_off
     case_command #BASIC_CMD,    BASIC_init
 command_line_done:
     JMP command_line                    ; Do it all again!

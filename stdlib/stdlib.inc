@@ -24,4 +24,9 @@ nmi_ptr = $FC                   ; Location of NMI routine
 irq_ptr = $FE                   ; Location of IRQ routine
 
 ; Library routines
-write = $F000                   ; XXXX this sucks
+write     = $F000                   ; XXXX this sucks
+getch_nw  = $F1AE
+putch     = $F1BB
+beep      = $F1C8 
+binhex    = $F200
+delayms   = $F219

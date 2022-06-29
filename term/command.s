@@ -61,8 +61,8 @@ parse_command:
     check_command STACK, STACK_CMD
     check_command PEEK, PEEK_CMD
     check_command POKE, POKE_CMD
-    check_command BLINKON, BLINK_ON
-    check_command BLINKOFF, BLINK_OFF
+    check_command LEDON, LED_ON_CMD
+    check_command LEDOFF, LED_OFF_CMD
     check_command BASIC, BASIC_CMD
 error:
     LDA #ERROR_CMD
