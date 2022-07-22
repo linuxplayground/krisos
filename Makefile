@@ -6,7 +6,7 @@ LDCFG = krisos.cfg
 LDMAP = krisos.map
 CONFIG = config.inc
 TARGET = kernel.bin
-SERIAL = /dev/tty.usbserial-AD0JIPTS
+SERIAL = /dev/tty.usbserial-A50285BI
 
 # Order currently matters to the linker!
 OBJS =  zeropage.o \

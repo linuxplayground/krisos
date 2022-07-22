@@ -2,20 +2,6 @@
     .psc02                      ; Enable 65c02 opcodes
 
     .include "via.inc"
-    .include "stdlib.inc"
-
-LF      	= $0a
-NULL    	= $00
-CR      	= $0d
-string_ptr 	= $00
-
-.macro writeln str_addr
-    LDA #<str_addr
-    STA string_ptr
-    LDA #>str_addr
-    STA string_ptr+1
-    JSR write
-.endmacro
 
     .zeropage
 temp_y:     .res 1
@@ -24,7 +10,6 @@ noteh:      .res 2
 
     .code
 ; -------------  Play Music
-    writeln happ_message
 
 	lda #$40        ; 01000000
 	sta VIA2_IER    ; Interrupt Enable Register
@@ -77,10 +62,8 @@ end:
 	lda #$00
 	sta VIA2_ACR ; turn off timer.
 
-rts              ; return to monitor
+	jmp $A405    ; return to monitor
 
-; ------------- ascii messages
-happ_message: .asciiz "Happy Birthday To You!"
 ; ------------- Lookup tables
 
 ; Happy Birthday to you
@@ -317,4 +300,4 @@ NOTEMSB:
 	.byte $00	; 69	A8
 	.byte $00	; 6A	A#8/Bb8
 	.byte $00	; 6B	B8
-	.byte $00  ; 6C    NO NOTE
+	.byte $00   ; 6C    NO NOTE

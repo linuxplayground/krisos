@@ -35,5 +35,5 @@ int main () {
     
     puts("Goodbye...");
     
-    return(0x1234);
+    return(0);
 }

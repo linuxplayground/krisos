@@ -11,7 +11,7 @@ irqbtn:
 music:
 	ca65 -I ../../io -I ../../stdlib music.s
 	ld65 -C load.cfg -o music.raw music.o
-	printf "\x00\x10" | cat - music.raw > music.bin
+	printf "\x00\x20" | cat - music.raw > music.bin
 
 clean:
 	rm *.o

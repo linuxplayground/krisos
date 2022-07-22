@@ -19,15 +19,13 @@
 // SOFTWARE.
 
 #include <stdio.h>
-
-int main(void) {
+void main()
+{     
     int i;
-    char c = 'A';
-    while (1) {
-        for (i=0;i<32000;i++) {
-            putchar(c);
-        }
-        c++;
-    }
-    return 0;
+	printf("The first 10 natural numbers are:\n");
+	for (i=1;i<=10;i++)
+	{      
+		printf("%d ",i);
+	}
+printf("\n");
 }
